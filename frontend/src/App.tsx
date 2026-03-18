@@ -11,11 +11,11 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <header className="border-b bg-white">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-4">
-            <h1 className="text-lg font-semibold text-slate-900">
-              Clinical Data Reconciliation Engine
+      <header className="border-b border-slate-200 bg-white/80 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
+          <div className="flex items-center gap-5">
+            <h1 className="text-base font-semibold text-slate-900">
+              Clinical Data Reconciliation
             </h1>
             <ApiKeyInput />
           </div>
@@ -23,21 +23,21 @@ const App: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveTab('medication')}
-              className={`rounded-full px-3 py-1 text-sm ${
+              className={`rounded-md px-3.5 py-1.5 text-xs font-medium transition ${
                 activeTab === 'medication'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-slate-100 text-slate-700'
+                  ? 'bg-slate-900 text-white shadow-sm'
+                  : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
               }`}
             >
-              Medication Reconciliation
+              Medication
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('dataQuality')}
-              className={`rounded-full px-3 py-1 text-sm ${
+              className={`rounded-md px-3.5 py-1.5 text-xs font-medium transition ${
                 activeTab === 'dataQuality'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-slate-100 text-slate-700'
+                  ? 'bg-slate-900 text-white shadow-sm'
+                  : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
               }`}
             >
               Data Quality
@@ -46,7 +46,7 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 py-6">
+      <main className="mx-auto max-w-6xl px-6 py-8">
         {activeTab === 'medication' ? <MedicationReconciliationForm /> : <DataQualityForm />}
       </main>
     </div>
