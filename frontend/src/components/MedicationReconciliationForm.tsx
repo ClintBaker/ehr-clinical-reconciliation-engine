@@ -36,6 +36,9 @@ const sampleRequest: MedicationReconciliationRequest = {
 
 export const MedicationReconciliationForm: React.FC = () => {
   const [payload, setPayload] = useState<MedicationReconciliationRequest>(sampleRequest);
+  const [conditionsInput, setConditionsInput] = useState(
+    sampleRequest.patient_context.conditions.join(', '),
+  );
   const [result, setResult] = useState<MedicationReconciliationResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -88,6 +91,7 @@ export const MedicationReconciliationForm: React.FC = () => {
 
   const loadSample = () => {
     setPayload(sampleRequest);
+    setConditionsInput(sampleRequest.patient_context.conditions.join(', '));
     setResult(null);
     setError(null);
   };
@@ -156,19 +160,21 @@ export const MedicationReconciliationForm: React.FC = () => {
               <input
                 type="text"
                 className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                value={payload.patient_context.conditions.join(', ')}
-                onChange={(e) =>
-                  setPayload((prev) => ({
-                    ...prev,
-                    patient_context: {
-                      ...prev.patient_context,
-                      conditions: e.target.value
-                        .split(',')
-                        .map((s) => s.trim())
-                        .filter(Boolean),
-                    },
-                  }))
-                }
+                  value={conditionsInput}
+                  onChange={(e) => {
+                    const rawValue = e.target.value;
+                    setConditionsInput(rawValue);
+                    setPayload((prev) => ({
+                      ...prev,
+                      patient_context: {
+                        ...prev.patient_context,
+                        conditions: rawValue
+                          .split(',')
+                          .map((s) => s.trim())
+                          .filter(Boolean),
+                      },
+                    }));
+                  }}
               />
             </div>
           </div>
