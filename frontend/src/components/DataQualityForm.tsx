@@ -50,7 +50,7 @@ export const DataQualityForm: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold text-slate-900">Data Quality Assessment</h2>
           <p className="text-sm text-slate-600">
@@ -67,236 +67,239 @@ export const DataQualityForm: React.FC = () => {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="grid gap-6 md:grid-cols-2">
-        <section className="space-y-3 rounded-xl border border-slate-200 bg-white p-5 text-sm shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900">Demographics & clinical</h3>
-          <div className="space-y-2">
-            <input
-              type="text"
-              placeholder="Name"
-              className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-              value={record.demographics.name ?? ''}
-              onChange={(e) =>
-                setRecord((prev) => ({
-                  ...prev,
-                  demographics: { ...prev.demographics, name: e.target.value },
-                }))
-              }
-            />
-            <input
-              type="date"
-              className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-              value={record.demographics.dob ?? ''}
-              onChange={(e) =>
-                setRecord((prev) => ({
-                  ...prev,
-                  demographics: { ...prev.demographics, dob: e.target.value },
-                }))
-              }
-            />
-            <input
-              type="text"
-              placeholder="Gender"
-              className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-              value={record.demographics.gender ?? ''}
-              onChange={(e) =>
-                setRecord((prev) => ({
-                  ...prev,
-                  demographics: { ...prev.demographics, gender: e.target.value },
-                }))
-              }
-            />
-            <div>
-              <label className="mb-1 block text-slate-700">
-                Conditions (comma-separated)
-              </label>
+      <div className="grid gap-6 md:grid-cols-[1fr_0.95fr] md:items-start">
+        <form onSubmit={handleSubmit} className="order-1 md:order-0 grid gap-6 md:grid-cols-2">
+          <section className="space-y-3 rounded-lg border border-slate-200 bg-white p-5 text-sm shadow-sm">
+            <h3 className="text-sm font-semibold text-slate-900">Demographics & clinical</h3>
+            <div className="space-y-2">
               <input
                 type="text"
+                placeholder="Name"
                 className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                value={record.conditions.join(', ')}
+                value={record.demographics.name ?? ''}
                 onChange={(e) =>
                   setRecord((prev) => ({
                     ...prev,
-                    conditions: e.target.value
-                      .split(',')
-                      .map((s) => s.trim())
-                      .filter(Boolean),
+                    demographics: { ...prev.demographics, name: e.target.value },
                   }))
                 }
               />
-            </div>
-          </div>
-        </section>
-
-        <section className="space-y-3 rounded-xl border border-slate-200 bg-white p-5 text-sm shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900">Medications, allergies & vitals</h3>
-          <div className="space-y-2">
-            <div>
-              <label className="mb-1 block text-slate-700">
-                Medications (comma-separated)
-              </label>
-              <input
-                type="text"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                value={record.medications.join(', ')}
-                onChange={(e) =>
-                  setRecord((prev) => ({
-                    ...prev,
-                    medications: e.target.value
-                      .split(',')
-                      .map((s) => s.trim())
-                      .filter(Boolean),
-                  }))
-                }
-              />
-            </div>
-            <div>
-              <label className="mb-1 block text-slate-700">
-                Allergies (comma-separated)
-              </label>
-              <input
-                type="text"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                value={record.allergies.join(', ')}
-                onChange={(e) =>
-                  setRecord((prev) => ({
-                    ...prev,
-                    allergies: e.target.value
-                      .split(',')
-                      .map((s) => s.trim())
-                      .filter(Boolean),
-                  }))
-                }
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <input
-                type="text"
-                placeholder="Blood pressure (e.g., 120/80)"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                value={record.vital_signs.blood_pressure ?? ''}
-                onChange={(e) =>
-                  setRecord((prev) => ({
-                    ...prev,
-                    vital_signs: {
-                      ...prev.vital_signs,
-                      blood_pressure: e.target.value,
-                    },
-                  }))
-                }
-              />
-              <input
-                type="text"
-                placeholder="Heart rate"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                value={record.vital_signs.heart_rate ?? ''}
-                onChange={(e) =>
-                  setRecord((prev) => ({
-                    ...prev,
-                    vital_signs: {
-                      ...prev.vital_signs,
-                      heart_rate: e.target.value,
-                    },
-                  }))
-                }
-              />
-            </div>
-            <div>
-              <label className="mb-1 block text-slate-700">Last updated</label>
               <input
                 type="date"
                 className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                value={record.last_updated}
+                value={record.demographics.dob ?? ''}
                 onChange={(e) =>
                   setRecord((prev) => ({
                     ...prev,
-                    last_updated: e.target.value,
+                    demographics: { ...prev.demographics, dob: e.target.value },
                   }))
                 }
               />
+              <input
+                type="text"
+                placeholder="Gender"
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                value={record.demographics.gender ?? ''}
+                onChange={(e) =>
+                  setRecord((prev) => ({
+                    ...prev,
+                    demographics: { ...prev.demographics, gender: e.target.value },
+                  }))
+                }
+              />
+              <div>
+                <label className="mb-1 block text-slate-700">Conditions (comma-separated)</label>
+                <input
+                  type="text"
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  value={record.conditions.join(', ')}
+                  onChange={(e) =>
+                    setRecord((prev) => ({
+                      ...prev,
+                      conditions: e.target.value
+                        .split(',')
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    }))
+                  }
+                />
+              </div>
             </div>
+          </section>
+
+          <section className="space-y-3 rounded-lg border border-slate-200 bg-white p-5 text-sm shadow-sm">
+            <h3 className="text-sm font-semibold text-slate-900">Medications, allergies & vitals</h3>
+            <div className="space-y-2">
+              <div>
+                <label className="mb-1 block text-slate-700">Medications (comma-separated)</label>
+                <input
+                  type="text"
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  value={record.medications.join(', ')}
+                  onChange={(e) =>
+                    setRecord((prev) => ({
+                      ...prev,
+                      medications: e.target.value
+                        .split(',')
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    }))
+                  }
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-slate-700">Allergies (comma-separated)</label>
+                <input
+                  type="text"
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  value={record.allergies.join(', ')}
+                  onChange={(e) =>
+                    setRecord((prev) => ({
+                      ...prev,
+                      allergies: e.target.value
+                        .split(',')
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    }))
+                  }
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="text"
+                  placeholder="Blood pressure (e.g., 120/80)"
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  value={record.vital_signs.blood_pressure ?? ''}
+                  onChange={(e) =>
+                    setRecord((prev) => ({
+                      ...prev,
+                      vital_signs: {
+                        ...prev.vital_signs,
+                        blood_pressure: e.target.value,
+                      },
+                    }))
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder="Heart rate"
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  value={record.vital_signs.heart_rate ?? ''}
+                  onChange={(e) =>
+                    setRecord((prev) => ({
+                      ...prev,
+                      vital_signs: {
+                        ...prev.vital_signs,
+                        heart_rate: e.target.value,
+                      },
+                    }))
+                  }
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-slate-700">Last updated</label>
+                <input
+                  type="date"
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  value={record.last_updated}
+                  onChange={(e) =>
+                    setRecord((prev) => ({
+                      ...prev,
+                      last_updated: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+            </div>
+          </section>
+
+          <div className="md:col-span-2 flex items-center justify-between">
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex items-center gap-1.5 rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-emerald-300"
+            >
+              {loading ? 'Evaluating…' : 'Evaluate data quality'}
+            </button>
+            {error && <p className="text-sm text-red-600">Error: {error}</p>}
           </div>
-        </section>
+        </form>
 
-        <div className="md:col-span-2 flex items-center justify-between">
-          <button
-            type="submit"
-            disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-emerald-300"
-          >
-            {loading ? 'Evaluating…' : 'Evaluate data quality'}
-          </button>
-          {error && <p className="text-sm text-red-600">Error: {error}</p>}
-        </div>
-      </form>
-
-      {result && (
-        <section className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h3 className="text-sm font-semibold text-slate-900">Overall score</h3>
-              <p className={`mt-1 text-3xl font-semibold ${overallColor}`}>
-                {result.overall_score}
-                <span className="ml-1 text-base text-slate-500">/ 100</span>
-              </p>
-            </div>
-            <div className="flex flex-1 flex-col gap-2 md:max-w-md">
-              {(
-                Object.entries(result.breakdown) as Array<
-                  [keyof DataQualityResponse['breakdown'], number]
-                >
-              ).map(([dim, score]) => (
-                <div key={dim}>
-                  <div className="flex items-center justify-between text-xs text-slate-600">
-                    <span className="capitalize">{dim.replace('_', ' ')}</span>
-                    <span>{score}</span>
-                  </div>
-                  <div className="mt-1 h-1.5 w-full rounded-full bg-slate-100">
-                    <div
-                      className={`h-1.5 rounded-full ${barColor(score)}`}
-                      style={{ width: `${score}%` }}
-                    />
-                  </div>
+        <aside className="order-0 md:order-1 md:sticky md:top-8 md:max-h-[calc(100vh-140px)] md:overflow-auto">
+          {result ? (
+            <section className="space-y-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-900">Overall score</h3>
+                  <p className={`mt-1 text-3xl font-semibold ${overallColor}`}>
+                    {result.overall_score}
+                    <span className="ml-1 text-base text-slate-500">/ 100</span>
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {result.issues_detected.length > 0 && (
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                Issues detected
-              </h4>
-              <ul className="mt-2 space-y-2 text-sm">
-                {result.issues_detected.map((issue, idx) => (
-                  <li
-                    key={`${issue.field}-${idx}`}
-                    className="rounded-md border border-slate-200 bg-slate-50 p-2"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-slate-800">
-                        {issue.field}
-                      </span>
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                          issue.severity === 'high'
-                            ? 'bg-red-50 text-red-700'
-                            : issue.severity === 'medium'
-                            ? 'bg-amber-50 text-amber-700'
-                            : 'bg-slate-100 text-slate-700'
-                        }`}
-                      >
-                        {issue.severity.toUpperCase()}
-                      </span>
+                <div className="flex flex-1 flex-col gap-2 md:max-w-md">
+                  {(
+                    Object.entries(result.breakdown) as Array<
+                      [keyof DataQualityResponse['breakdown'], number]
+                    >
+                  ).map(([dim, score]) => (
+                    <div key={dim}>
+                      <div className="flex items-center justify-between text-xs text-slate-600">
+                        <span className="capitalize">{dim.replace('_', ' ')}</span>
+                        <span>{score}</span>
+                      </div>
+                      <div className="mt-1 h-1.5 w-full rounded-full bg-slate-100">
+                        <div
+                          className={`h-1.5 rounded-full ${barColor(score)}`}
+                          style={{ width: `${score}%` }}
+                        />
+                      </div>
                     </div>
-                    <p className="mt-1 text-xs text-slate-700">{issue.issue}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                  ))}
+                </div>
+              </div>
+
+              {result.issues_detected.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Issues detected
+                  </h4>
+                  <ul className="mt-2 space-y-2 text-sm">
+                    {result.issues_detected.map((issue, idx) => (
+                      <li
+                        key={`${issue.field}-${idx}`}
+                        className="rounded-md border border-slate-200 bg-slate-50 p-2"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-medium text-slate-800">{issue.field}</span>
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                              issue.severity === 'high'
+                                ? 'bg-red-50 text-red-700'
+                                : issue.severity === 'medium'
+                                ? 'bg-amber-50 text-amber-700'
+                                : 'bg-slate-100 text-slate-700'
+                            }`}
+                          >
+                            {issue.severity.toUpperCase()}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-xs text-slate-700">{issue.issue}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          ) : (
+            <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+              <h3 className="text-sm font-semibold text-slate-900">Results</h3>
+              <p className="mt-1 text-sm text-slate-600">
+                Submit a record to see the quality score, breakdown, and issues.
+              </p>
+            </section>
           )}
-        </section>
-      )}
+        </aside>
+      </div>
     </div>
   );
 };
